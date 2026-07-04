@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sachin Chaudhary — Software Engineer, Backend Systems & Applied ML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#05060a;
+  --glass:rgba(255,255,255,0.045);
+  --glass-hi:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.09);
+  --text:#f3f5f9;
+  --text-dim:#9aa3b5;
+  --text-faint:#5c6478;
+  --violet:#8b7cff;
+  --cyan:#31d8e0;
+  --amber:#ffb85c;
+  --grad:linear-gradient(120deg, var(--violet), var(--cyan));
+  --font-display:'Sora', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+  --maxw:980px;
+  --radius:16px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:4px; }
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+::selection{ background:rgba(139,124,255,0.35); }
+
+/* ===== AMBIENT BACKDROP (hero only) ===== */
+.hero{
+  position:relative;
+  padding:110px 0 60px;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.mesh{
+  position:absolute; inset:-20% -10% auto -10%;
+  height:640px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(139,124,255,0.28), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(49,216,224,0.22), transparent 50%),
+    radial-gradient(circle at 55% 70%, rgba(255,184,92,0.10), transparent 55%);
+  filter:blur(40px);
+  pointer-events:none;
+  z-index:0;
+}
+@media (prefers-reduced-motion:no-preference){
+  .mesh{ animation:meshshift 16s ease-in-out infinite alternate; }
+}
+@keyframes meshshift{
+  0%{ transform:translate(0,0) scale(1); }
+  100%{ transform:translate(2%,3%) scale(1.06); }
+}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  background:var(--glass);
+  border:1px solid var(--border);
+  padding:7px 14px;
+  border-radius:30px;
+  margin-bottom:28px;
+}
+.eyebrow::before{
+  content:''; width:7px; height:7px; border-radius:50%;
+  background:var(--cyan); box-shadow:0 0 10px var(--cyan);
+}
+
+.terminal{
+  font-family:var(--font-mono);
+  font-size:clamp(15px,2vw,18px);
+  color:var(--text-dim);
+  min-height:1.4em;
+  margin-bottom:22px;
+}
+.terminal .prompt{ color:var(--violet); }
+.terminal .cursor{
+  display:inline-block; width:9px; height:1.1em; background:var(--cyan);
+  margin-left:2px; vertical-align:middle;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero h1{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(42px,7vw,68px);
+  letter-spacing:-0.02em;
+  line-height:1.02;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero .role{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(17px,2.2vw,21px);
+  color:var(--text-dim);
+  margin-top:20px;
+  max-width:600px;
+}
+
+.hero-links{ display:flex; flex-wrap:wrap; gap:14px; margin-top:38px; }
+.hero-links a{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--font-mono); font-size:13px;
+  padding:11px 18px; border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  backdrop-filter:blur(10px);
+  transition:transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.hero-links a:hover{ transform:translateY(-3px); border-color:var(--violet); background:var(--glass-hi); }
+.hero-links a.primary{ background:var(--grad); color:#05060a; font-weight:700; border-color:transparent; }
+.hero-links a.primary:hover{ filter:brightness(1.08); }
+.hero-links i{ color:var(--cyan); }
+.hero-links a.primary i{ color:#05060a; }
+
+/* status */
+.status-strip{
+  margin-top:56px; padding-top:22px; border-top:1px solid var(--border);
+  display:flex; flex-wrap:wrap; gap:10px 26px;
+  font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint);
+}
+.status-strip b{ color:var(--text-dim); font-weight:600; }
+
+/* ===== SECTIONS ===== */
+section{ padding:64px 0; border-bottom:1px solid var(--border); }
+.tag-label{
+  font-family:var(--font-mono); font-size:12px; color:var(--violet);
+  letter-spacing:0.12em; text-transform:uppercase; margin-bottom:10px; display:block;
+}
+.section-head{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(24px,3.4vw,32px); margin-bottom:28px; letter-spacing:-0.01em;
+}
+.lede{ font-size:16px; color:var(--text-dim); max-width:680px; }
+
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+
+/* glass card base */
+.glass{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(14px);
+}
+
+/* EXPERIENCE */
+.job{ padding:26px 28px; margin-bottom:18px; }
+.job-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+.job-title{ font-family:var(--font-display); font-size:18.5px; font-weight:700; }
+.job-title span{ color:var(--text-dim); font-weight:400; }
+.job-date{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); white-space:nowrap; }
+.chip-row{ display:flex; gap:8px; margin:12px 0 14px; flex-wrap:wrap; }
+.chip{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--cyan); background:rgba(49,216,224,0.08); border:1px solid rgba(49,216,224,0.25); padding:4px 10px; border-radius:6px; }
+.job ul{ list-style:none; }
+.job li{ position:relative; padding-left:22px; margin-bottom:9px; font-size:14.5px; color:#c6cedb; }
+.job li::before{ content:'▹'; position:absolute; left:0; color:var(--violet); }
+
+/* PROJECTS */
+.project-flag{ padding:30px; position:relative; margin-bottom:22px; overflow:hidden; }
+.project-flag::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--grad);
+}
+.project-flag h3{ font-family:var(--font-display); font-size:22px; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:12px; }
+.flagpill{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; background:var(--grad); color:#05060a; padding:3px 9px; border-radius:5px; font-weight:700; }
+.project-flag a.gh{ margin-left:auto; color:var(--text-faint); font-size:17px; }
+.project-flag a.gh:hover{ color:var(--cyan); }
+.stack-line{ font-family:var(--font-mono); font-size:12px; color:var(--cyan); margin:8px 0 14px; display:block; }
+.project-flag ul{ list-style:none; }
+.project-flag li{ position:relative; padding-left:22px; margin-bottom:9px; font-size:14.5px; color:#c6cedb; }
+.project-flag li::before{ content:'▹'; position:absolute; left:0; color:var(--violet); }
+
+.grid-projects{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.pcard{ padding:22px; transition:transform .25s ease, border-color .25s ease, opacity .25s ease; }
+.pcard.hidden-by-filter{ opacity:0.25; transform:scale(0.98); filter:grayscale(0.6); }
+.pcard:hover{ transform:translateY(-4px); border-color:var(--violet); }
+.pcard h4{ font-family:var(--font-display); font-size:16px; font-weight:700; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+.pcard h4 a{ color:var(--text-faint); font-size:14px; }
+.pcard h4 a:hover{ color:var(--cyan); }
+.pcard ul{ list-style:none; margin-top:8px; }
+.pcard li{ position:relative; padding-left:18px; font-size:13.5px; color:#aebccb; margin-bottom:6px; }
+.pcard li::before{ content:'—'; position:absolute; left:0; color:var(--text-faint); }
+
+.mini-list{ margin-top:20px; padding:8px 24px; }
+.mini-item{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:6px; font-size:13.5px; color:var(--text-dim); padding:12px 0; border-bottom:1px dashed var(--border); }
+.mini-item:last-child{ border-bottom:none; }
+.mini-item strong{ color:var(--text); }
+.mini-item span{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); }
+
+/* SKILLS — interactive filter */
+.filter-hint{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); margin-bottom:18px; }
+.skill-groups{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px 36px; margin-bottom:10px; }
+.skill-group h5{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-faint); margin-bottom:12px; }
+.pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.pill{
+  font-family:var(--font-mono); font-size:12.5px; color:var(--text);
+  background:var(--glass); border:1px solid var(--border);
+  padding:7px 13px; border-radius:20px; cursor:pointer;
+  transition:all .2s ease; user-select:none;
+}
+.pill:hover{ border-color:var(--cyan); }
+.pill.active{ background:var(--grad); color:#05060a; border-color:transparent; font-weight:700; }
+
+/* EDUCATION */
+.edu-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; padding:18px 26px; }
+.edu-title{ font-family:var(--font-display); font-size:16px; font-weight:700; }
+.edu-sub{ font-size:13.5px; color:var(--text-dim); margin-top:3px; }
+.edu-date{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); white-space:nowrap; }
+
+/* FOOTER */
+footer{ padding:80px 0 56px; text-align:center; }
+footer h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(26px,4.4vw,38px); margin-bottom:16px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+footer p{ color:var(--text-dim); max-width:480px; margin:0 auto 30px; }
+.footer-links{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.foot-note{ margin-top:50px; font-family:var(--font-mono); font-size:11px; color:var(--text-faint); }
+
+@media (max-width:720px){
+  .hero{ padding-top:70px; }
+  .grid-projects{ grid-template-columns:1fr; }
+  .skill-groups{ grid-template-columns:1fr; }
+  .job-head{ flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="mesh"></div>
+  <div class="wrap">
+    <div class="eyebrow">Available for Software Engineer / ML Engineer roles</div>
+    <div class="terminal"><span class="prompt">sachin@dev ~ %</span> <span id="typed"></span><span class="cursor"></span></div>
+    <h1>Sachin Chaudhary</h1>
+    <p class="role">Software Engineer shipping backend systems and applied machine learning — from a raw log file to a deployed, tested API.</p>
+
+    <div class="hero-links">
+      <a href="mailto:sachin24250@gmail.com" class="primary"><i class="fa-solid fa-envelope"></i> Email me</a>
+      <a href="https://www.linkedin.com/in/sachin-chaudhary-391509410" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/Sachin2400" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="tel:+919667309708"><i class="fa-solid fa-phone"></i> +91 96673 09708</a>
+    </div>
+
+    <div class="status-strip">
+      <span><b>Experience</b> · 2+ yrs</span>
+      <span><b>Stack</b> · Java · Spring Boot · Python · ML</span>
+      <span><b>Based in</b> · Gurgaon, India</span>
+      <span><b>Open to</b> · Relocation &amp; remote</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="reveal">
+    <span class="tag-label">// Summary</span>
+    <h2 class="section-head">Backend foundation, extended into ML</h2>
+    <p class="lede">Two years building and supporting production backend systems, REST APIs, and enterprise integrations in Java, Spring Boot, Node.js, and SAP HANA. Recently completed structured ML training and shipped classification, regression, and anomaly-detection projects using Python and scikit-learn — most recently GuardAI, an end-to-end AI guardrail service combining anomaly detection with NLP-based PII redaction.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="tag-label">// Experience</span>
+    <h2 class="section-head">Where I've worked</h2>
+
+    <div class="job glass">
+      <div class="job-head">
+        <div class="job-title">Masters India <span>— Application Solutions Analyst</span></div>
+        <div class="job-date">Feb 2023 – Dec 2024 · Noida, India</div>
+      </div>
+      <div class="chip-row"><span class="chip">Backend</span><span class="chip">Integrations</span><span class="chip">SAP HANA</span></div>
+      <ul>
+        <li>Maintained and extended ERP backend workflows and SAP HANA data integrations, keeping automated pipelines and client-facing APIs stable in production.</li>
+        <li>Diagnosed high-impact integration failures end-to-end, fixing root causes instead of recurring symptoms.</li>
+        <li>Led technical discovery with enterprise clients, turning ambiguous requirements into concrete API contracts.</li>
+        <li>Owned the support queue for platform-critical integrations against SLA, and authored the internal runbooks the team still uses.</li>
+        <li>Acted as the technical bridge between client success and engineering.</li>
+      </ul>
+    </div>
+
+    <div class="job glass">
+      <div class="job-head">
+        <div class="job-title">Infosys <span>— System Engineer Trainee</span></div>
+        <div class="job-date">Dec 2024 – Jun 2025 · Mysuru, India</div>
+      </div>
+      <div class="chip-row"><span class="chip">Backend</span><span class="chip">Platform</span></div>
+      <ul>
+        <li>Built backend features and REST API enhancements for a multi-product cloud platform inside a shared production codebase.</li>
+        <li>Wrote unit tests and traced runtime failures across service boundaries, catching regressions before later environments.</li>
+        <li>Partnered with product and engineering leads inside Agile sprints to scope fixes and ship on schedule.</li>
+        <li>Documented deployment workflows so the wider team could self-serve instead of re-discovering fixes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="tag-label">// Projects</span>
+    <h2 class="section-head">What I've built</h2>
+
+    <div class="project-flag glass" data-domain="ml infra">
+      <h3>GuardAI — Enterprise AI Guardrail Pipeline <span class="flagpill">Flagship</span>
+        <a href="https://github.com/Sachin2400/guardai-anomaly-detection-pipeline" target="_blank" class="gh"><i class="fa-brands fa-github"></i></a>
+      </h3>
+      <span class="stack-line">Python · FastAPI · Scikit-learn · spaCy (NER) · Pytest · Docker</span>
+      <ul>
+        <li>Built an end-to-end guardrail service combining unsupervised anomaly detection (Isolation Forest) with NLP-based PII masking, protecting downstream systems at the point of data ingestion.</li>
+        <li>Used spaCy NER and regex together for context-aware redaction of sensitive data inside free-text input.</li>
+        <li>Shipped a validated REST API with FastAPI and Pydantic, monitored data-distribution drift with PSI metrics, and containerized the service with Docker.</li>
+      </ul>
+    </div>
+
+    <div class="grid-projects">
+      <div class="pcard glass" data-domain="ml">
+        <h4>Customer Churn Prediction <a href="https://github.com/Sachin2400/Customer-Churn-Prediction" target="_blank"><i class="fa-brands fa-github"></i></a></h4>
+        <span class="stack-line" style="margin-bottom:0;">RandomForest · Pandas · Scikit-learn</span>
+        <ul><li>Predicted churn from demographic and usage data; evaluated with confusion matrices and classification reports.</li></ul>
+      </div>
+      <div class="pcard glass" data-domain="ml">
+        <h4>Early Disease Detection <a href="https://github.com/Sachin2400/Early-Disease-Detection" target="_blank"><i class="fa-brands fa-github"></i></a></h4>
+        <span class="stack-line" style="margin-bottom:0;">Logistic Regression · SVM · Decision Trees</span>
+        <ul><li>Compared three classifiers on clinical indicators, optimizing for false-negative rate over raw accuracy.</li></ul>
+      </div>
+    </div>
+
+    <div class="mini-list glass">
+      <div class="mini-item" data-domain="ml"><strong>Property Price Prediction</strong><span>LINEAR REGRESSION · R²</span></div>
+      <div class="mini-item" data-domain="java backend"><strong>GST e-Invoicing Integration</strong><span>JAVA · SPRING BOOT · REST</span></div>
+      <div class="mini-item" data-domain="java backend"><strong>Employee Management System</strong><span>JAVA · MERN · CRUD</span></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="tag-label">// Skills</span>
+    <h2 class="section-head">Toolbox</h2>
+    <p class="filter-hint">Click a skill to filter the projects above that use it.</p>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h5>Languages</h5>
+        <div class="pill-row">
+          <span class="pill" data-filter="java">Java</span>
+          <span class="pill" data-filter="ml">Python</span>
+          <span class="pill" data-filter="backend">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h5>Backend &amp; APIs</h5>
+        <div class="pill-row">
+          <span class="pill" data-filter="java backend">Spring Boot</span>
+          <span class="pill" data-filter="backend">REST APIs</span>
+          <span class="pill" data-filter="backend">Node.js</span>
+          <span class="pill" data-filter="backend">MERN Stack</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h5>ML &amp; Data</h5>
+        <div class="pill-row">
+          <span class="pill" data-filter="ml">Scikit-learn</span>
+          <span class="pill" data-filter="ml">Pandas / NumPy</span>
+          <span class="pill" data-filter="ml">spaCy (NER)</span>
+          <span class="pill" data-filter="ml">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h5>Infra &amp; Practices</h5>
+        <div class="pill-row">
+          <span class="pill" data-filter="backend">MySQL</span>
+          <span class="pill" data-filter="backend">SAP HANA</span>
+          <span class="pill" data-filter="infra">Docker</span>
+          <span class="pill" data-filter="infra">CI/CD</span>
+          <span class="pill" data-filter="backend">Agile/Scrum</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="tag-label">// Education &amp; Certifications</span>
+    <h2 class="section-head">Background</h2>
+    <div class="glass" style="padding:6px 0;">
+      <div class="edu-row">
+        <div><div class="edu-title">Machine Learning with AI — Certification</div><div class="edu-sub">Supervised learning, regression/classification, applied Python data science</div></div>
+      </div>
+      <div class="edu-row" style="border-top:1px solid var(--border);">
+        <div><div class="edu-title">Infosys Foundation Training Program</div><div class="edu-sub">6-month intensive: Java &amp; OOP, Data Structures &amp; Algorithms, MySQL</div></div>
+      </div>
+      <div class="edu-row" style="border-top:1px solid var(--border);">
+        <div><div class="edu-title">B.Tech, Mechanical Engineering</div><div class="edu-sub">Galgotias College of Engineering &amp; Technology</div></div>
+        <div class="edu-date">2018 – 2022</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <h2>Let's build something.</h2>
+  <p>Open to Software Engineer, Backend, and ML Engineer roles. I reply to email fastest.</p>
+  <div class="footer-links">
+    <a href="mailto:sachin24250@gmail.com" class="pill" style="border-radius:10px; padding:11px 18px;">Email</a>
+    <a href="https://www.linkedin.com/in/sachin-chaudhary-391509410" target="_blank" class="pill" style="border-radius:10px; padding:11px 18px;">LinkedIn</a>
+    <a href="https://github.com/Sachin2400" target="_blank" class="pill" style="border-radius:10px; padding:11px 18px;">GitHub</a>
+  </div>
+  <div class="foot-note">built by Sachin Chaudhary(🇮🇳).</div>
+</footer>
+
+<script>
+  // Typing effect
+  const lines = [
+    "→ backend engineer, applied ML",
+    "→ 2+ years Experience"
+  ];
+  const typedEl = document.getElementById('typed');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion) {
+    typedEl.textContent = lines[lines.length - 1];
+  } else {
+    let lineIdx = 0, charIdx = 0, deleting = false;
+    function tick(){
+      const current = lines[lineIdx];
+      if (!deleting){
+        charIdx++;
+        typedEl.textContent = current.slice(0, charIdx);
+        if (charIdx === current.length){
+          if (lineIdx === lines.length - 1) return; // stop on last line
+          deleting = true;
+          setTimeout(tick, 1100);
+          return;
+        }
+      } else {
+        charIdx--;
+        typedEl.textContent = current.slice(0, charIdx);
+        if (charIdx === 0){
+          deleting = false;
+          lineIdx++;
+        }
+      }
+      setTimeout(tick, deleting ? 22 : 42);
+    }
+    tick();
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, { threshold:0.12 });
+    revealEls.forEach(el=>io.observe(el));
+  } else {
+    revealEls.forEach(el=>el.classList.add('in'));
+  }
+
+  // Interactive skill filter
+  const pills = document.querySelectorAll('.pill[data-filter]');
+  const filterables = document.querySelectorAll('[data-domain]');
+  let active = new Set();
+
+  pills.forEach(pill=>{
+    pill.addEventListener('click', ()=>{
+      const key = pill.dataset.filter.split(' ')[0]; // primary domain
+      if (active.has(key)){ active.delete(key); pill.classList.remove('active'); }
+      else { active.add(key); pill.classList.add('active'); }
+      applyFilter();
+    });
+  });
+
+  function applyFilter(){
+    if (active.size === 0){
+      filterables.forEach(el=>el.classList.remove('hidden-by-filter'));
+      return;
+    }
+    filterables.forEach(el=>{
+      const domains = el.dataset.domain.split(' ');
+      const match = domains.some(d=>active.has(d));
+      el.classList.toggle('hidden-by-filter', !match);
+    });
+  }
+</script>
+
+</body>
+</html>
